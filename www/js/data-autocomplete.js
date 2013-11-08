@@ -101,35 +101,13 @@ function carga_informacion(sql,objeto,info)
 
 function mapa(entidad)
 {
-	if (checkConnection() == 1) {
-		
-		var db;
-		db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
-		sentencia = "update parametro set valor_parametro = '"+entidad+"' where codigo_tparametro = 5";
+  var db;
+	db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+    sentencia = "update parametro set valor_parametro = '"+entidad+"' where codigo_tparametro = 5";
                db.transaction( function(tx) {
                         tx.executeSql(sentencia, [],
                                 function(tx, result){
-										
 									     window.location = ("mapa.html"); 
-										 
 										 });
 								   }); 
-	}
-	else  {
-	alert("No es posible ejecutar esta funcionalidad sin Conexión a Internet");
-	} 
- 
-}
-
-function checkConnection() 
-{
-	//alert("checkConnection");
-	//alert(navigator.connection.type);
-		 if(navigator.connection.type == Connection.NONE){ 
-		  var conexion = 0;
-		  }else{
-		  var conexion = 1;
-		  }
-		 // alert(conexion);
-		 return conexion;
 }
