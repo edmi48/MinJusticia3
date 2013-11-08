@@ -108,8 +108,12 @@ function mapa(entidad)
                db.transaction( function(tx) {
                         tx.executeSql(sentencia, [],
                                 function(tx, result){
+									if (device.platform  == 'iOS') {
+										window.location = ("mapa.html"); 
+									}
+									else {
 									     setInterval(function(){window.location = ("mapa.html");},2000);
-//										 window.location = ("mapa.html"); 
+									}
 										 });
 								   }); 
 }
