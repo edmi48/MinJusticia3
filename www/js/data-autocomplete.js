@@ -103,6 +103,7 @@ function mapa(entidad)
 {
   var db;
 	db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+	//alert(entidad);
     sentencia = "update parametro set valor_parametro = '"+entidad+"' where codigo_tparametro = 5";
                db.transaction( function(tx) {
                         tx.executeSql(sentencia, [],
