@@ -11,32 +11,37 @@ function actualiza_progressbar(por_ini,por_fin)
    .width(por_ini)
    .animate({
    width: por_fin
-   }, 2000);
-  });		
+   }, 1000);
+  });	
+
+  
 }
 
 function actualiza_set_datos()
 {
  var db;
+ var continua = 1;
  var porc_ini = 0;
  var porc_fin = 20;
- db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+ db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
  actualiza_progressbar(porc_ini+'%',porc_fin+'%');
  porc_ini = porc_fin;
  porc_fin = porc_fin + 20;
- $.Zebra_Dialog('<strong>Inicia proceso de actualización de información de click en aceptar y por favor espere un momento a que el proceso finalice...', {
+ $.Zebra_Dialog('<strong>Inicia proceso de actualización de información, de click en aceptar y espere a que finalice...', {
     'type':     'information',
     'title':    'Actualización de Información',
     'buttons':  ['Aceptar'],
     'onClose':  function(caption) {
- db.transaction(function(tx) {
+				$('div.navigation').block({ message: null });
+				db.transaction(function(tx) {
  				 tx.executeSql("SELECT valor_parametro, convencion_parametro FROM parametro where codigo_tparametro = 4", [],
                  function(tx, result)
 				 {				 
                   for(var i=0; i < result.rows.length; i++) 
-				  {
-				   actualiza_informacion(result.rows.item(i)['convencion_parametro'],result.rows.item(i)['valor_parametro']);
-				  }
+	               if (continua == 1)
+				   {
+				    actualiza_informacion(result.rows.item(i)['convencion_parametro'],result.rows.item(i)['valor_parametro']);
+				   }
 				 }); 
             });
     }
@@ -51,10 +56,13 @@ function actualiza_informacion(tabla, url)
                     url : url,
                     type : 'GET',
                     dataType : 'json',
-                    error: function() { 
-						 $.Zebra_Dialog('<strong>El catálogo de datos '+tabla+' no se encuentra disponible</strong>', {
+                    error: function() 
+					       { 
+						    $.Zebra_Dialog('<strong>El catálogo de datos '+tabla+' no se encuentra disponible. Intente más tarde!</strong>', 
+							{
 							'type':     'error',
-							'title':    'Actualización de Información'});
+							'title':    'Actualización de Información'
+							});
 						   }
                 });
 
@@ -104,45 +112,37 @@ function actualiza_informacion(tabla, url)
 	 return campo;
 	}
 		
-		function actualiza_tabla(tabla)
-		{
+  function actualiza_tabla(tabla)
+  {
 
- var db;
- db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
- if (db) 
- {
+   var db;
+   db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
+   if (db) 
+   {
         db.transaction( function(tx) {
-
-			for(var i=0; i < sql_query.length; i++)
+			var contador = sql_query.length - 1;
+			for(var j=0; j < sql_query.length; j++)
 			{
-			 if (i == 0) 
+			 if (j == 0) 
 			 {
 			  tx.executeSql("Delete from "+tabla);
 			  if (tabla == 'informacion_programa') tx.executeSql("Delete from palabra_clave");
 			 } 
-			 tx.executeSql(sql_query[i]);
-			 if (i == (sql_query.length - 1))
-			 {
-              tx.executeSql("Select count(*) as numero From "+tabla, [],
-                 function(tx, result){
-                     for(var i=0; i < result.rows.length; i++) var contador = [result.rows.item(i)['numero']];
-					 //alert("Informacion "+tabla+": "+contador);
-					 if (tabla == 'ubicacion_programa')
+			 tx.executeSql(sql_query[j], [],
+                 function(tx, result, j, contador){
+			     if ((j == contador) && (tabla == 'ubicacion_programa'))
 					 {						 
-					  actualiza_progressbar('80%','100%');
+					  actualiza_progressbar('70%','100%');
+					  $('div.navigation').unblock();
+	  				 }
+		
+			    });
 
-			  $.Zebra_Dialog('<strong>Actualización de Información Finalizada exitósamente</strong>', {
-							'type':     'information',
-							'title':    'Actualización de Información'});
-	  				}
-                 });		
-			 }
 			}
 
 
         });			
- }		
-		}   
-		
-}	
+   }		
+  }   		
+ }	
 }

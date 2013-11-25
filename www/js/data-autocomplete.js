@@ -1,7 +1,7 @@
 $(function(){
   var currencies = [];
   var db;
-     db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+     db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
 
   	 db.transaction(function(tx) 
 				    {				
@@ -69,7 +69,7 @@ $(function(){
 function carga_informacion(sql,objeto,info)
 {
    var db;
-     db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+     db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
   	 					  db.transaction(function(tx) 
 									    {				
            	  	 tx.executeSql(sql, [],
@@ -101,19 +101,33 @@ function carga_informacion(sql,objeto,info)
 
 function mapa(entidad)
 {
-  var db;
-	db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
-	//alert(entidad);
-    sentencia = "update parametro set valor_parametro = '"+entidad+"' where codigo_tparametro = 5";
-               db.transaction( function(tx) {
-                        tx.executeSql(sentencia, [],
-                                function(tx, result){
-									if (device.platform  == 'iOS') {
-										window.location = ("mapa.html"); 
-									}
-									else {
-									     setInterval(function(){window.location = ("mapa.html");},2000);
-									}
-										 });
-								   }); 
+	if (checkConnection() == 1) {
+	  var db;
+		db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
+		//alert(entidad);
+		sentencia = "update parametro set valor_parametro = '"+entidad+"' where codigo_tparametro = 5";
+	               db.transaction( function(tx) {
+	                        tx.executeSql(sentencia, [],
+	                                function(tx, result){
+										if (device.platform  == 'iOS') {
+											window.location = ("mapa.html"); 
+										}
+										else {
+											 setInterval(function(){window.location = ("mapa.html");},2000);
+										}
+											 });
+									   });
+	}
+	else 
+		alert("No es posible ejecutar esta funcionalidad sin Conexión a Internet");
 }
+
+ function checkConnection() 
+		{
+		 if(navigator.connection.type == Connection.NONE){ 
+		  var conexion = 0;
+		  }else{
+			var conexion = 1;
+		  }
+		 return conexion;
+        }

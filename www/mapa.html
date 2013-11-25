@@ -1,6 +1,6 @@
 ﻿<html class="no-js ui-mobile-rendering" lang="es">
 <head>
-      <title>ORIENTATE</title>
+      <title>Mapa</title>
 
       <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
@@ -47,7 +47,7 @@
 // InicializaDatos();
 
         function InicializaDatos() {
-     db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+     db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
     sentencia = "Select nombre_lugar, direccion_lugar, telefono_lugar, email, latitud, longitud From ubicacion_programa  where tipo_programa='"+nom_programa+"'";
 // alert("Sentencia: "+sentencia);
 
@@ -73,6 +73,10 @@
 
 
         }
+ 
+ 
+ 
+ 
 </script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript">
@@ -85,6 +89,8 @@
     //
 function onDeviceReady() {
 	//alert("4");
+	//nom_programa="Centro de Convivencia";
+	//icon_destino="Centro de Convivencia Ciudadana";
 	 if (navigator.geolocation)
     {
 		navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge:3000,timeout:30000,enableHighAccuracy:true});
@@ -123,8 +129,11 @@ function onSuccess(position) {
 function onError(error) {
 	if(error.code==1)
 	{
-		alert("No es posible ingresar a la funcionalidad por denegar permisos de ubicación");
-		window.location="index.html";
+		
+		//alert("sin punto de origen");
+		ubicapuntos();
+		//alert("No es posible ingresar a la funcionalidad por denegar permisos de ubicación");
+		//window.location="index.html";
 /* $.Zebra_Dialog('No es posible ingresar a la funcionalidad por denegar permisos de ubicación', {
     'type':     'error',
     'title':    'Error en la generación del Mapa',
@@ -136,8 +145,8 @@ function onError(error) {
 	}
 	else if(error.code==3)
 	{
-		alert("1. Compruebe su conexión a Internet. \n2. Activar los servicios de ubicación \n3. Si persiste el problema, reinicie su dispositivo móvil");
-		window.location="index.html";
+		alert("Para visualizar Mi ubicación: \n  * Activar la ubicación de redes móviles y GPS \n  * Activar Wi-Fi");
+		ubicapuntos();
 /* $.Zebra_Dialog('<strong>1.</strong>Compruebe su conexión a Internet<br><strong>2.</strong>Compruebe la activación de Ubicación por GPS y/o WI FI<br><strong>3.</strong>Si persiste el problema, reinicie su dispositivo móvil', {
     'type':     'error',
     'title':    'Timeout - Error en la generación del Mapa',
@@ -151,8 +160,8 @@ function onError(error) {
 	}
 	else if(error.code==2)
 	{
-		alert("1. Compruebe su conexión a Internet. \n2. Activar los servicios de ubicación \n3. Si persiste el problema, reinicie su dispositivo móvil");
-		window.location="index.html";
+		alert("Para visualizar Mi ubicación: \n  * Activar la ubicación de redes móviles y GPS \n  * Activar Wi-Fi.");
+		ubicapuntos();
  /*$.Zebra_Dialog('<strong>1.</strong>Compruebe su conexión a Internet<br><strong>2.</strong>Compruebe la activación de Ubicación por GPS y/o WI FI<br><strong>3.</strong>Si persiste el problema, reinicie su dispositivo móvil', {
     'type':     'error',
     'title':    'Posibles causas de error en la generación del Mapa',
@@ -205,7 +214,7 @@ var url = location.href;
 	var url = location.href;
 	var index = url.indexOf("?");
 	
-	db = openDatabase("ejemplo3.db3", "1.0", "Ministerio de Justicia", 500000);
+	db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
     sentencia = "select valor_parametro from parametro where codigo_tparametro = 5";
                db.transaction( function(tx) {
                         tx.executeSql(sentencia, [],
@@ -277,14 +286,25 @@ function mostrarMapa(){
 			directionsService = new google.maps.DirectionsService();
 			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 			//alert("motrar mapa");
-			var mtv = new google.maps.LatLng(Latori, Lngori);
+			
+			var myLatlng = new google.maps.LatLng(4.599047, -74.080917);
+			// Se carga el mapa de Colombia
+			var myOptions = {
+			  zoom: 5,
+			  center: myLatlng,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP,
+			  disableDefaultUI: false,
+			  scrollwheel: true,
+			  draggable: true,
+			  navigationControl: true,
+			  mapTypeControl: false,
+			  scaleControl: true,
+			  disableDoubleClickZoom: false
+			};
+			
+				var mtv = new google.maps.LatLng(Latori, Lngori);
 				showDirections();
-				map = new google.maps.Map(document.getElementById('map_canvas'), {
-					center : mtv,
-					zoom : 13,
-					mapTypeId : 'roadmap',
-					icon: 'images/derecha.png'
-				});
+				map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
 				//COLOCA EL ICONO DEL ORIGEN
 				var origen = new google.maps.Marker({
 				position: new google.maps.LatLng(Latori, Lngori),
@@ -344,6 +364,111 @@ function mostrarMapa(){
 				//directionsDisplay.setPanel(document.getElementById("directions-panel"));
 
 			}
+			
+			
+function mostrarMapa2(){	
+			MyOrigin = new google.maps.LatLng(Latori, Lngori);
+			MyDestination = new google.maps.LatLng(Latdes, Lngdes);
+			directionsService = new google.maps.DirectionsService();
+			directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+			//alert("motrar mapa");
+			
+			var myLatlng = new google.maps.LatLng(4.599047, -74.080917);
+			// Se carga el mapa de Colombia
+			var myOptions = {
+			  zoom: 5,
+			  center: myLatlng,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP,
+			  disableDefaultUI: false,
+			  scrollwheel: true,
+			  draggable: true,
+			  navigationControl: true,
+			  mapTypeControl: false,
+			  scaleControl: true,
+			  disableDoubleClickZoom: false
+			};
+			
+				var mtv = new google.maps.LatLng(Latori, Lngori);
+				showDirections();
+				map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+				
+			}
+			
+var indice=0;
+var destino =[];
+var Direccion_destino1 = [];
+var Nombre_destino1 = [];
+var Telefono_destino1 = [];
+var Correo_destino1 = [];
+var Latdes1 = [];
+var Lngdes1 = [];
+
+ function ubicapuntos() {
+ //alert("entra");
+     db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
+    sentencia = "Select nombre_lugar, direccion_lugar, telefono_lugar, email, latitud, longitud From ubicacion_programa  where tipo_programa='"+nom_programa+"'";
+ //alert("Sentencia: "+sentencia);
+
+                db.transaction( function(tx) {
+                        tx.executeSql(sentencia, [],
+                                function(tx, result){
+ //alert(result.rows.length);
+                                        for(var i=0; i < result.rows.length; i++)  
+										//for(var i=0; i < 2; i++) 	 
+											{
+											
+											 Latdes1[i] = result.rows.item(i)['latitud'];
+											 Lngdes1[i] = result.rows.item(i)['longitud'];
+											 Direccion_destino1[i] = result.rows.item(i)['direccion_lugar'];
+											 Nombre_destino1[i] = result.rows.item(i)['nombre_lugar'];
+											 Telefono_destino1[i] = result.rows.item(i)['telefono_lugar'];
+											 Correo_destino1[i] = result.rows.item(i)['email'];
+											 //calcularDistancia();
+											 //alert("8"+i);
+											 indice=i;
+											 if(i==0) mostrarMapa2();
+											 ingresapunto(i);
+											}
+                                });
+                });
+
+
+        }
+			
+function ingresapunto(var1) {		
+//COLOCA EL ICONO DEL DESTINO
+				if (icon_destino =="Casa de Justicia") {
+					destino[var1] = new google.maps.Marker({
+					position: new google.maps.LatLng(Latdes1[var1], Lngdes1[var1]),
+					icon: 'images/cj.png',
+					map: map
+					});
+				}
+				else
+				{
+					destino[var1] = new google.maps.Marker({
+					position: new google.maps.LatLng(Latdes1[var1], Lngdes1[var1]),
+					icon: 'images/ccc.png',
+					map: map,
+					title: Nombre_destino+"\n"+Direccion_destino,
+					});
+				}
+				//UBICA EL PUNTO DESTINO
+				var infowindow = new google.maps.InfoWindow({
+				map: map,
+				position: new google.maps.LatLng(Latdes1[var1], Lngdes1[var1]),
+				});
+				//EVENTO CUANDO SE DA CLICK SOBRE EL PUNTO DESTINO
+					google.maps.event.addListener(destino[var1], 'click', function() {
+						var dialogo = mostrarInfo(Direccion_destino1[var1], Nombre_destino1[var1], Telefono_destino1[var1], Correo_destino1[var1]);
+						//var dialogo = Nombre_destino1[var1];
+						var infowindow = new google.maps.InfoWindow({
+						map: map,
+						position: new google.maps.LatLng(Latdes1[var1], Lngdes1[var1]),
+						content: dialogo										
+						});
+					});
+}
 						
 function showDirections() {
   
@@ -371,13 +496,11 @@ function mostrarInfo (r_direc, r_nombre,r_tel,r_correo) {
 
 		
 </script>
-	  <script type="text/javascript" src="js/zebra_dialog.js"></script>
-	  <link rel="stylesheet" href="css/zebra_dialog.css" type="text/css">
 
 </head>
 	
 <body onload="initialize();" onresize="window.location.reload();">
-<div id="categories" data-role="page" data-title="Mapa" style="background-image: url('images/fondo_2.jpg'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
+<div id="categories" data-role="page" data-title="Mapa" style="background-image: url('images/fondo_2.png'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
 <div height=200px style="background-image: url('images/cabecera8.png'); background-repeat:no-repeat; background-size:100% 100%; background-position: absolute">
 <div> 
 <a href="orientate.html" target="_self"> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
