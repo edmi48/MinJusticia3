@@ -292,8 +292,9 @@ tx.executeSql("insert into parametro values(6,'mcf8Wwqw4JQ','Centros de Conviven
 tx.executeSql("insert into parametro values(7,'http://servicedatosabiertoscolombia.cloudapp.net/v1/Ministerio_de_Justicia/informacionprogramas?$format=json','informacion_programa',4);")
 tx.executeSql("insert into parametro values(8,'http://servicedatosabiertoscolombia.cloudapp.net/v1/Ministerio_de_Justicia/ubicacionprogramas?$format=json','ubicacion_programa',4);")
 tx.executeSql("insert into parametro values(9,'Casa de Justicia','Casa de Justicia',5);")
+            });
 
-
+db.transaction( function(tx) {
 tx.executeSql("Select count(*) as numero From palabra_clave", [],
                 function(tx, result){
                     for(var i=0; i < result.rows.length; i++) 
