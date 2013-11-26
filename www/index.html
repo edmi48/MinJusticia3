@@ -371,7 +371,8 @@ function abrir_twitter()
                 document.write('</div>')
 				
                 document.write('<div class="item fav">')
-                document.write('<a href="#" onclick="abrir_twitter();"><img src="images/opcion3.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
+                //document.write('<a href="#" onclick="abrir_twitter();"><img src="images/opcion3.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
+				document.write('<a href="#" onclick=\'abrir_twitter();return false\'><img src="images/opcion3.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
                 document.write('</div>')
 				
                 document.write('<div class="item home">')
@@ -382,7 +383,7 @@ function abrir_twitter()
                 document.write('<a href="creditos.html" target="_self"><img src="images/opcion5.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
                 document.write('</div>')
 				
-		document.write('<div class="item actual" >')
+				document.write('<div class="item actual" >')
                 document.write('<a href="#" onclick=\'ejecuta_actualizacion();return false\'><img src="images/opcion6.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a>')
                 document.write('</div>')
 				
