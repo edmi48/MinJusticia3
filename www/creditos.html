@@ -10,16 +10,11 @@
 	  
 <script>
 
-function onDeviceReady() 
-{
- document.addEventListener("backbutton", onBackKeyDown, false);
-}	
+document.addEventListener("backbutton", onBackKeyDown, false);	
 
 function onBackKeyDown() {
 	window.location = ("index.html"); 
 }
-
-document.addEventListener("deviceready", onDeviceReady, false);
 
 function updateBackground() {
 screenWidth = $(window).width();
