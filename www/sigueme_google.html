@@ -13,7 +13,8 @@
             function onDeviceReady()
             {
 					alert("antes del plugin");
-                    window.plugins.childBrowser.showWebPage('http://www.google.com/',{ showLocationBar: true });
+                    //window.plugins.childBrowser.showWebPage('http://www.google.com/',{ showLocationBar: true });
+					window.plugins.childBrowser.openExternal('http://www.google.com');
 					alert("despues del plugin");
             }
         </script>
