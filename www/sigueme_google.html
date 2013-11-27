@@ -1,29 +1,42 @@
-﻿<html>
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
     <head>
-        <title>ChildBrowser</title>
-	
-		<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-		<script type="text/javascript" src="childbrowser.js"></script>
-		
-        <script>
-            function onBodyLoad()
-            {      
-                document.addEventListener("deviceready", onDeviceReady, false);
-            }
-            function onDeviceReady()
-            {
-					alert("antes del plugin");
-                    //window.plugins.childBrowser.showWebPage('http://www.google.com/',{ showLocationBar: true });
-					window.plugins.childBrowser.openExternal('http://www.google.com');
-					alert("despues del plugin");
-            }
-        </script>
-    </head>
-    <body>
+        <!-- Change this if you want to allow scaling -->
+        <meta name="viewport" content="width=default-width; user-scalable=no" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+            <title>HelloPhoneGap</title>         
+            <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+            <script type="text/javascript" charset="utf-8" src="ChildBrowser.js"></script>
+            <script type="text/javascript" charset="utf-8">
+                var childBrowser;
+                function onBodyLoad()
+                {
+                    document.addEventListener("deviceready",onDeviceReady,false);
+                }
+                /* PhoneGap has been initialized and is ready to roll */
+                function onDeviceReady()
+                {
+                    phoneGapReady.innerHTML = "PhoneGap is Ready";
+                    childBrowser = ChildBrowser.install();
+                }
+                function openChildBrowser(url)
+                {
+                    try {
+                        //both of these should work...
+                        //window.plugins.childBrowser.showWebPage(url);
+                        childBrowser.showWebPage(url);
+                    }
+                    catch (err)
+                    {
+                        alert(err);
+                    }
+                }
+                </script>
+            </head>
+    <body onload="onBodyLoad()">
 <div> 
 <a href="index.html"> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
 </div>
-        <p>click the button to open Oodles Technologies WebSite in ChildBrowser</p>
-        <button onclick="onDeviceReady();">click</button>
+           <button onclick="openChildBrowser('http://www.google.com');">Open Google</button> 
     </body>
 </html>

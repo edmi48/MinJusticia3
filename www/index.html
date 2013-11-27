@@ -275,8 +275,9 @@ window.location = ("index.html");
 function abrir_twitter()
 {
 		alert("antes del plugin");
-		//window.plugins.childBrowser.showWebPage('https://mobile.twitter.com/MinjusticiaCo',{ showLocationBar: true });
+		window.plugins.childBrowser.showWebPage('https://mobile.twitter.com/MinjusticiaCo',{ showLocationBar: true });
 		window.plugins.childBrowser.showWebPage('http://www.google.com/',{ showLocationBar: true });
+		window.plugins.childBrowser.openExternal('http://www.google.com');
 		alert("despues del plugin");
 		//MyWindow = window.open('https://mobile.twitter.com/MinjusticiaCo', '_blank', 'location=yes');
 		//MyWindow.addEventListener('exit', Close); 
@@ -357,7 +358,7 @@ function abrir_twitter()
 				document.write('<ul>')
 					document.write('<li><a href="#" onclick=\'abrir_opcion("orientate.html",0);return false\'><img src="images/opcion1.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="#" onclick=\'abrir_opcion("informate.html",1);return false\'><img src="images/opcion2.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
-					document.write('<li><a href="#" onclick=\'abrir_opcion("sigueme_google.html",1);return false\'><img src="images/opcion3.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
+					document.write('<li><a href="#" onclick=\'abrir_twitter();return false\'><img src="images/opcion3.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="#" onclick=\'abrir_opcion("sugiereme.html",1);return false\'><img src="images/opcion4.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="creditos.html" target="_self"><img src="images/opcion5.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
 					document.write('<li><a href="#" onclick=\'ejecuta_actualizacion();return false\'><img src="images/opcion6.png" class="imagen-link" height="'+icon_alto+'px" width="'+icon_ancho+'px" ></a></li>')
