@@ -274,7 +274,10 @@ window.location = ("index.html");
 
 function abrir_twitter()
 {
-		window.plugins.childBrowser.showWebPage('https://mobile.twitter.com/MinjusticiaCo',{ showLocationBar: true });
+		alert("antes del plugin");
+		//window.plugins.childBrowser.showWebPage('https://mobile.twitter.com/MinjusticiaCo',{ showLocationBar: true });
+		window.plugins.childBrowser.showWebPage('http://www.google.com/',{ showLocationBar: true });
+		alert("despues del plugin");
 		//MyWindow = window.open('https://mobile.twitter.com/MinjusticiaCo', '_blank', 'location=yes');
 		//MyWindow.addEventListener('exit', Close); 
 		/*
