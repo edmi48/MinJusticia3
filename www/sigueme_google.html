@@ -4,39 +4,25 @@
         <!-- Change this if you want to allow scaling -->
         <meta name="viewport" content="width=default-width; user-scalable=no" />
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-            <title>HelloPhoneGap</title>         
-            <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-            <script type="text/javascript" charset="utf-8" src="ChildBrowser.js"></script>
-            <script type="text/javascript" charset="utf-8">
-                var childBrowser;
-                function onBodyLoad()
-                {
-                    document.addEventListener("deviceready",onDeviceReady,false);
-                }
-                /* PhoneGap has been initialized and is ready to roll */
-                function onDeviceReady()
-                {
-                    phoneGapReady.innerHTML = "PhoneGap is Ready";
-                    childBrowser = ChildBrowser.install();
-                }
-                function openChildBrowser(url)
-                {
-                    try {
-                        //both of these should work...
-                        window.plugins.childBrowser.showWebPage(url);
-                        //childBrowser.showWebPage(url);
-                    }
-                    catch (err)
-                    {
-                        alert(err);
-                    }
-                }
-                </script>
-            </head>
-    <body onload="onBodyLoad()">
-<div> 
-<a href="index.html"> <img src="images/regresar.png" class="imagen-link" height="60px" width="60px" align="left" style="margin: 5px 8px"></a>
-</div>
-           <button onclick="openChildBrowser('http://www.google.com');">Open Google</button> 
-    </body>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for Cordova to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // Cordova is ready
+    //
+    function onDeviceReady() {
+         var ref = window.open('http://apache.org', '_blank', 'location=yes');
+         ref.addEventListener('loadstart', function() { alert('start: ' + event.url); });
+         ref.addEventListener('loadstop', function() { alert('stop: ' + event.url); });
+         ref.addEventListener('exit', function() { window.location="index.html"; });
+    }
+
+    </script>
+  </head>
+  <body>
+  </body>
 </html>
