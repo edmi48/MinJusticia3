@@ -155,6 +155,9 @@
         </style>
 
 	<script type="text/javascript" charset="utf-8">
+var MyWindow;
+//Mywindow.close();	  
+	alert("otra vez");
 function onDeviceReady() 
 {
  document.addEventListener("backbutton", onBackKeyDown, false);
@@ -264,15 +267,26 @@ else  $.Zebra_Dialog('<strong>No es posible ejecutar esta funcionalidad sin Cone
 });
 } 
 
+function Close(event) { 
+alert("cerrar");
+MyWindow.close();
+window.location = ("index.html"); 
+} 
+
 function abrir_twitter()
 {
+	
+		MyWindow = window.open('https://mobile.twitter.com/MinjusticiaCo', '_blank', 'location=yes');
+		MyWindow.addEventListener('exit', Close); 
+		/*
 	if (checkConnection() == 1) {
+		 db = openDatabase("justice_for_all.db3", "1.0", "Justicia para Todos", 500000);
 		window.open('https://mobile.twitter.com/MinjusticiaCo', '_blank', 'location=yes','closebuttoncaption=Regresar');
 	}
 	else  $.Zebra_Dialog('<strong>No es posible ejecutar esta funcionalidad sin Conexión a Internet</strong>', {
 		'type':     'error',
 		'title':    'Sin Conexión a Internet'
-	});
+	});*/
 /*
  if (device.platform  == 'iOS') {
 	if (checkConnection() == 1) {

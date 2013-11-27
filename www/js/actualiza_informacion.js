@@ -11,7 +11,7 @@ function actualiza_progressbar(por_ini,por_fin)
    .width(por_ini)
    .animate({
    width: por_fin
-   }, 1000);
+   }, 3000);
   });	
 
   
@@ -134,6 +134,7 @@ function actualiza_informacion(tabla, url)
 					 {						 
 					  actualiza_progressbar('70%','100%');
 					  $('div.navigation').unblock();
+					  window.location = ("index.html"); 
 	  				 }
 		
 			    });
