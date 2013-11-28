@@ -9,6 +9,17 @@
 
 	  
  <script type='text/javascript'> 
+
+function onDeviceReady() 
+{
+ document.addEventListener("backbutton", onBackKeyDown, false);
+}	
+
+function onBackKeyDown() {
+	window.location = ("index.html"); 
+}
+
+document.addEventListener("deviceready", onDeviceReady, false);
   
  function mostrarYoutube(search_input,id)
  {
